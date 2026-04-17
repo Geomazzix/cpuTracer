@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{9918f762-6e32-4952-87c1-ffe574a20c29}</ProjectGuid>
+    <RootNamespace>glm</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)/bin/$(Platform)-$(Configuration)/deps/$(ProjectName)/</OutDir>
+    <IntDir>$(SolutionDir)/bin/int/$(Platform)-$(Configuration)/deps/$(ProjectName)/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)/bin/$(Platform)-$(Configuration)/deps/$(ProjectName)/</OutDir>
+    <IntDir>$(SolutionDir)/bin/int/$(Platform)-$(Configuration)/deps/$(ProjectName)/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)/bin/$(Platform)-$(Configuration)/deps/$(ProjectName)/</OutDir>
+    <IntDir>$(SolutionDir)/bin/int/$(Platform)-$(Configuration)/deps/$(ProjectName)/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)/bin/$(Platform)-$(Configuration)/deps/$(ProjectName)/</OutDir>
+    <IntDir>$(SolutionDir)/bin/int/$(Platform)-$(Configuration)/deps/$(ProjectName)/</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\common.hpp" />
+    <ClInclude Include="include\detail\compute_common.hpp" />
+    <ClInclude Include="include\detail\compute_vector_relational.hpp" />
+    <ClInclude Include="include\detail\qualifier.hpp" />
+    <ClInclude Include="include\detail\setup.hpp" />
+    <ClInclude Include="include\detail\type_float.hpp" />
+    <ClInclude Include="include\detail\type_half.hpp" />
+    <ClInclude Include="include\detail\type_mat2x2.hpp" />
+    <ClInclude Include="include\detail\type_mat2x3.hpp" />
+    <ClInclude Include="include\detail\type_mat2x4.hpp" />
+    <ClInclude Include="include\detail\type_mat3x2.hpp" />
+    <ClInclude Include="include\detail\type_mat3x3.hpp" />
+    <ClInclude Include="include\detail\type_mat3x4.hpp" />
+    <ClInclude Include="include\detail\type_mat4x2.hpp" />
+    <ClInclude Include="include\detail\type_mat4x3.hpp" />
+    <ClInclude Include="include\detail\type_mat4x4.hpp" />
+    <ClInclude Include="include\detail\type_quat.hpp" />
+    <ClInclude Include="include\detail\type_vec1.hpp" />
+    <ClInclude Include="include\detail\type_vec2.hpp" />
+    <ClInclude Include="include\detail\type_vec3.hpp" />
+    <ClInclude Include="include\detail\type_vec4.hpp" />
+    <ClInclude Include="include\detail\_features.hpp" />
+    <ClInclude Include="include\detail\_fixes.hpp" />
+    <ClInclude Include="include\detail\_noise.hpp" />
+    <ClInclude Include="include\detail\_swizzle.hpp" />
+    <ClInclude Include="include\detail\_swizzle_func.hpp" />
+    <ClInclude Include="include\detail\_vectorize.hpp" />
+    <ClInclude Include="include\exponential.hpp" />
+    <ClInclude Include="include\ext.hpp" />
+    <ClInclude Include="include\ext\matrix_clip_space.hpp" />
+    <ClInclude Include="include\ext\matrix_common.hpp" />
+    <ClInclude Include="include\ext\matrix_double2x2.hpp" />
+    <ClInclude Include="include\ext\matrix_double2x2_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double2x3.hpp" />
+    <ClInclude Include="include\ext\matrix_double2x3_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double2x4.hpp" />
+    <ClInclude Include="include\ext\matrix_double2x4_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double3x2.hpp" />
+    <ClInclude Include="include\ext\matrix_double3x2_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double3x3.hpp" />
+    <ClInclude Include="include\ext\matrix_double3x3_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double3x4.hpp" />
+    <ClInclude Include="include\ext\matrix_double3x4_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double4x2.hpp" />
+    <ClInclude Include="include\ext\matrix_double4x2_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double4x3.hpp" />
+    <ClInclude Include="include\ext\matrix_double4x3_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_double4x4.hpp" />
+    <ClInclude Include="include\ext\matrix_double4x4_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float2x2.hpp" />
+    <ClInclude Include="include\ext\matrix_float2x2_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float2x3.hpp" />
+    <ClInclude Include="include\ext\matrix_float2x3_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float2x4.hpp" />
+    <ClInclude Include="include\ext\matrix_float2x4_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float3x2.hpp" />
+    <ClInclude Include="include\ext\matrix_float3x2_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float3x3.hpp" />
+    <ClInclude Include="include\ext\matrix_float3x3_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float3x4.hpp" />
+    <ClInclude Include="include\ext\matrix_float3x4_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float4x2.hpp" />
+    <ClInclude Include="include\ext\matrix_float4x2_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float4x3.hpp" />
+    <ClInclude Include="include\ext\matrix_float4x3_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_float4x4.hpp" />
+    <ClInclude Include="include\ext\matrix_float4x4_precision.hpp" />
+    <ClInclude Include="include\ext\matrix_int2x2.hpp" />
+    <ClInclude Include="include\ext\matrix_int2x2_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int2x3.hpp" />
+    <ClInclude Include="include\ext\matrix_int2x3_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int2x4.hpp" />
+    <ClInclude Include="include\ext\matrix_int2x4_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int3x2.hpp" />
+    <ClInclude Include="include\ext\matrix_int3x2_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int3x3.hpp" />
+    <ClInclude Include="include\ext\matrix_int3x3_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int3x4.hpp" />
+    <ClInclude Include="include\ext\matrix_int3x4_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int4x2.hpp" />
+    <ClInclude Include="include\ext\matrix_int4x2_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int4x3.hpp" />
+    <ClInclude Include="include\ext\matrix_int4x3_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_int4x4.hpp" />
+    <ClInclude Include="include\ext\matrix_int4x4_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_integer.hpp" />
+    <ClInclude Include="include\ext\matrix_projection.hpp" />
+    <ClInclude Include="include\ext\matrix_relational.hpp" />
+    <ClInclude Include="include\ext\matrix_transform.hpp" />
+    <ClInclude Include="include\ext\matrix_uint2x2.hpp" />
+    <ClInclude Include="include\ext\matrix_uint2x2_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint2x3.hpp" />
+    <ClInclude Include="include\ext\matrix_uint2x3_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint2x4.hpp" />
+    <ClInclude Include="include\ext\matrix_uint2x4_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint3x2.hpp" />
+    <ClInclude Include="include\ext\matrix_uint3x2_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint3x3.hpp" />
+    <ClInclude Include="include\ext\matrix_uint3x3_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint3x4.hpp" />
+    <ClInclude Include="include\ext\matrix_uint3x4_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint4x2.hpp" />
+    <ClInclude Include="include\ext\matrix_uint4x2_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint4x3.hpp" />
+    <ClInclude Include="include\ext\matrix_uint4x3_sized.hpp" />
+    <ClInclude Include="include\ext\matrix_uint4x4.hpp" />
+    <ClInclude Include="include\ext\matrix_uint4x4_sized.hpp" />
+    <ClInclude Include="include\ext\quaternion_common.hpp" />
+    <ClInclude Include="include\ext\quaternion_double.hpp" />
+    <ClInclude Include="include\ext\quaternion_double_precision.hpp" />
+    <ClInclude Include="include\ext\quaternion_exponential.hpp" />
+    <ClInclude Include="include\ext\quaternion_float.hpp" />
+    <ClInclude Include="include\ext\quaternion_float_precision.hpp" />
+    <ClInclude Include="include\ext\quaternion_geometric.hpp" />
+    <ClInclude Include="include\ext\quaternion_relational.hpp" />
+    <ClInclude Include="include\ext\quaternion_transform.hpp" />
+    <ClInclude Include="include\ext\quaternion_trigonometric.hpp" />
+    <ClInclude Include="include\ext\scalar_common.hpp" />
+    <ClInclude Include="include\ext\scalar_constants.hpp" />
+    <ClInclude Include="include\ext\scalar_integer.hpp" />
+    <ClInclude Include="include\ext\scalar_int_sized.hpp" />
+    <ClInclude Include="include\ext\scalar_packing.hpp" />
+    <ClInclude Include="include\ext\scalar_reciprocal.hpp" />
+    <ClInclude Include="include\ext\scalar_relational.hpp" />
+    <ClInclude Include="include\ext\scalar_uint_sized.hpp" />
+    <ClInclude Include="include\ext\scalar_ulp.hpp" />
+    <ClInclude Include="include\ext\vector_bool1.hpp" />
+    <ClInclude Include="include\ext\vector_bool1_precision.hpp" />
+    <ClInclude Include="include\ext\vector_bool2.hpp" />
+    <ClInclude Include="include\ext\vector_bool2_precision.hpp" />
+    <ClInclude Include="include\ext\vector_bool3.hpp" />
+    <ClInclude Include="include\ext\vector_bool3_precision.hpp" />
+    <ClInclude Include="include\ext\vector_bool4.hpp" />
+    <ClInclude Include="include\ext\vector_bool4_precision.hpp" />
+    <ClInclude Include="include\ext\vector_common.hpp" />
+    <ClInclude Include="include\ext\vector_double1.hpp" />
+    <ClInclude Include="include\ext\vector_double1_precision.hpp" />
+    <ClInclude Include="include\ext\vector_double2.hpp" />
+    <ClInclude Include="include\ext\vector_double2_precision.hpp" />
+    <ClInclude Include="include\ext\vector_double3.hpp" />
+    <ClInclude Include="include\ext\vector_double3_precision.hpp" />
+    <ClInclude Include="include\ext\vector_double4.hpp" />
+    <ClInclude Include="include\ext\vector_double4_precision.hpp" />
+    <ClInclude Include="include\ext\vector_float1.hpp" />
+    <ClInclude Include="include\ext\vector_float1_precision.hpp" />
+    <ClInclude Include="include\ext\vector_float2.hpp" />
+    <ClInclude Include="include\ext\vector_float2_precision.hpp" />
+    <ClInclude Include="include\ext\vector_float3.hpp" />
+    <ClInclude Include="include\ext\vector_float3_precision.hpp" />
+    <ClInclude Include="include\ext\vector_float4.hpp" />
+    <ClInclude Include="include\ext\vector_float4_precision.hpp" />
+    <ClInclude Include="include\ext\vector_int1.hpp" />
+    <ClInclude Include="include\ext\vector_int1_sized.hpp" />
+    <ClInclude Include="include\ext\vector_int2.hpp" />
+    <ClInclude Include="include\ext\vector_int2_sized.hpp" />
+    <ClInclude Include="include\ext\vector_int3.hpp" />
+    <ClInclude Include="include\ext\vector_int3_sized.hpp" />
+    <ClInclude Include="include\ext\vector_int4.hpp" />
+    <ClInclude Include="include\ext\vector_int4_sized.hpp" />
+    <ClInclude Include="include\ext\vector_integer.hpp" />
+    <ClInclude Include="include\ext\vector_packing.hpp" />
+    <ClInclude Include="include\ext\vector_reciprocal.hpp" />
+    <ClInclude Include="include\ext\vector_relational.hpp" />
+    <ClInclude Include="include\ext\vector_uint1.hpp" />
+    <ClInclude Include="include\ext\vector_uint1_sized.hpp" />
+    <ClInclude Include="include\ext\vector_uint2.hpp" />
+    <ClInclude Include="include\ext\vector_uint2_sized.hpp" />
+    <ClInclude Include="include\ext\vector_uint3.hpp" />
+    <ClInclude Include="include\ext\vector_uint3_sized.hpp" />
+    <ClInclude Include="include\ext\vector_uint4.hpp" />
+    <ClInclude Include="include\ext\vector_uint4_sized.hpp" />
+    <ClInclude Include="include\ext\vector_ulp.hpp" />
+    <ClInclude Include="include\fwd.hpp" />
+    <ClInclude Include="include\geometric.hpp" />
+    <ClInclude Include="include\glm.hpp" />
+    <ClInclude Include="include\gtc\bitfield.hpp" />
+    <ClInclude Include="include\gtc\color_space.hpp" />
+    <ClInclude Include="include\gtc\constants.hpp" />
+    <ClInclude Include="include\gtc\epsilon.hpp" />
+    <ClInclude Include="include\gtc\integer.hpp" />
+    <ClInclude Include="include\gtc\matrix_access.hpp" />
+    <ClInclude Include="include\gtc\matrix_integer.hpp" />
+    <ClInclude Include="include\gtc\matrix_inverse.hpp" />
+    <ClInclude Include="include\gtc\matrix_transform.hpp" />
+    <ClInclude Include="include\gtc\noise.hpp" />
+    <ClInclude Include="include\gtc\packing.hpp" />
+    <ClInclude Include="include\gtc\quaternion.hpp" />
+    <ClInclude Include="include\gtc\random.hpp" />
+    <ClInclude Include="include\gtc\reciprocal.hpp" />
+    <ClInclude Include="include\gtc\round.hpp" />
+    <ClInclude Include="include\gtc\type_aligned.hpp" />
+    <ClInclude Include="include\gtc\type_precision.hpp" />
+    <ClInclude Include="include\gtc\type_ptr.hpp" />
+    <ClInclude Include="include\gtc\ulp.hpp" />
+    <ClInclude Include="include\gtc\vec1.hpp" />
+    <ClInclude Include="include\gtx\associated_min_max.hpp" />
+    <ClInclude Include="include\gtx\bit.hpp" />
+    <ClInclude Include="include\gtx\closest_point.hpp" />
+    <ClInclude Include="include\gtx\color_encoding.hpp" />
+    <ClInclude Include="include\gtx\color_space.hpp" />
+    <ClInclude Include="include\gtx\color_space_YCoCg.hpp" />
+    <ClInclude Include="include\gtx\common.hpp" />
+    <ClInclude Include="include\gtx\compatibility.hpp" />
+    <ClInclude Include="include\gtx\component_wise.hpp" />
+    <ClInclude Include="include\gtx\dual_quaternion.hpp" />
+    <ClInclude Include="include\gtx\easing.hpp" />
+    <ClInclude Include="include\gtx\euler_angles.hpp" />
+    <ClInclude Include="include\gtx\extend.hpp" />
+    <ClInclude Include="include\gtx\extended_min_max.hpp" />
+    <ClInclude Include="include\gtx\exterior_product.hpp" />
+    <ClInclude Include="include\gtx\fast_exponential.hpp" />
+    <ClInclude Include="include\gtx\fast_square_root.hpp" />
+    <ClInclude Include="include\gtx\fast_trigonometry.hpp" />
+    <ClInclude Include="include\gtx\functions.hpp" />
+    <ClInclude Include="include\gtx\gradient_paint.hpp" />
+    <ClInclude Include="include\gtx\handed_coordinate_space.hpp" />
+    <ClInclude Include="include\gtx\hash.hpp" />
+    <ClInclude Include="include\gtx\integer.hpp" />
+    <ClInclude Include="include\gtx\intersect.hpp" />
+    <ClInclude Include="include\gtx\io.hpp" />
+    <ClInclude Include="include\gtx\log_base.hpp" />
+    <ClInclude Include="include\gtx\matrix_cross_product.hpp" />
+    <ClInclude Include="include\gtx\matrix_decompose.hpp" />
+    <ClInclude Include="include\gtx\matrix_factorisation.hpp" />
+    <ClInclude Include="include\gtx\matrix_interpolation.hpp" />
+    <ClInclude Include="include\gtx\matrix_major_storage.hpp" />
+    <ClInclude Include="include\gtx\matrix_operation.hpp" />
+    <ClInclude Include="include\gtx\matrix_query.hpp" />
+    <ClInclude Include="include\gtx\matrix_transform_2d.hpp" />
+    <ClInclude Include="include\gtx\mixed_product.hpp" />
+    <ClInclude Include="include\gtx\norm.hpp" />
+    <ClInclude Include="include\gtx\normal.hpp" />
+    <ClInclude Include="include\gtx\normalize_dot.hpp" />
+    <ClInclude Include="include\gtx\number_precision.hpp" />
+    <ClInclude Include="include\gtx\optimum_pow.hpp" />
+    <ClInclude Include="include\gtx\orthonormalize.hpp" />
+    <ClInclude Include="include\gtx\perpendicular.hpp" />
+    <ClInclude Include="include\gtx\polar_coordinates.hpp" />
+    <ClInclude Include="include\gtx\projection.hpp" />
+    <ClInclude Include="include\gtx\quaternion.hpp" />
+    <ClInclude Include="include\gtx\range.hpp" />
+    <ClInclude Include="include\gtx\raw_data.hpp" />
+    <ClInclude Include="include\gtx\rotate_normalized_axis.hpp" />
+    <ClInclude Include="include\gtx\rotate_vector.hpp" />
+    <ClInclude Include="include\gtx\scalar_multiplication.hpp" />
+    <ClInclude Include="include\gtx\scalar_relational.hpp" />
+    <ClInclude Include="include\gtx\spline.hpp" />
+    <ClInclude Include="include\gtx\std_based_type.hpp" />
+    <ClInclude Include="include\gtx\string_cast.hpp" />
+    <ClInclude Include="include\gtx\texture.hpp" />
+    <ClInclude Include="include\gtx\transform.hpp" />
+    <ClInclude Include="include\gtx\transform2.hpp" />
+    <ClInclude Include="include\gtx\type_aligned.hpp" />
+    <ClInclude Include="include\gtx\type_trait.hpp" />
+    <ClInclude Include="include\gtx\vector_angle.hpp" />
+    <ClInclude Include="include\gtx\vector_query.hpp" />
+    <ClInclude Include="include\gtx\vec_swizzle.hpp" />
+    <ClInclude Include="include\gtx\wrap.hpp" />
+    <ClInclude Include="include\integer.hpp" />
+    <ClInclude Include="include\mat2x2.hpp" />
+    <ClInclude Include="include\mat2x3.hpp" />
+    <ClInclude Include="include\mat2x4.hpp" />
+    <ClInclude Include="include\mat3x2.hpp" />
+    <ClInclude Include="include\mat3x3.hpp" />
+    <ClInclude Include="include\mat3x4.hpp" />
+    <ClInclude Include="include\mat4x2.hpp" />
+    <ClInclude Include="include\mat4x3.hpp" />
+    <ClInclude Include="include\mat4x4.hpp" />
+    <ClInclude Include="include\matrix.hpp" />
+    <ClInclude Include="include\packing.hpp" />
+    <ClInclude Include="include\simd\common.h" />
+    <ClInclude Include="include\simd\exponential.h" />
+    <ClInclude Include="include\simd\geometric.h" />
+    <ClInclude Include="include\simd\integer.h" />
+    <ClInclude Include="include\simd\matrix.h" />
+    <ClInclude Include="include\simd\neon.h" />
+    <ClInclude Include="include\simd\packing.h" />
+    <ClInclude Include="include\simd\platform.h" />
+    <ClInclude Include="include\simd\trigonometric.h" />
+    <ClInclude Include="include\simd\vector_relational.h" />
+    <ClInclude Include="include\trigonometric.hpp" />
+    <ClInclude Include="include\vec2.hpp" />
+    <ClInclude Include="include\vec3.hpp" />
+    <ClInclude Include="include\vec4.hpp" />
+    <ClInclude Include="include\vector_relational.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\glm.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

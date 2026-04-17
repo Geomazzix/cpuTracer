@@ -1,3 +1,13 @@
+# Result directories
+RenderResult.png
+*.hdr
+[Rr]ayOutResults/
+[Bb]in/
+
+# Visual studio
+*.vs/
+*.vcxproj.user
+
 # Prerequisites
 *.d
 
