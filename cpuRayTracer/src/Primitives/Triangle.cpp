@@ -1,6 +1,6 @@
-#include "Primitives/Triangle.h"
-#include "Ray.h"
-#include "Utility/MathUtility.h"
+#include "primitives/triangle.hpp"
+#include "ray.hpp"
+#include "utility/math.hpp"
 
 namespace CRT
 {

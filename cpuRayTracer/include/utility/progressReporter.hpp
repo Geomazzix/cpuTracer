@@ -38,7 +38,7 @@
 #include <atomic>
 #include <chrono>
 #include <thread>
-#include "JobSystem.h"
+#include "jobsystem.hpp"
 
 namespace CRT 
 {

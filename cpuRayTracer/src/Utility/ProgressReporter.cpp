@@ -28,7 +28,7 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
  */
-#include "Utility/ProgressReporter.h"
+#include "utility/progressReporter.hpp"
 
 #if defined(_WIN64) || defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN

@@ -1,7 +1,7 @@
-#include "Image.h"
+#include "image.hpp"
 #include <cmath>
 #include <algorithm>
-#include "Ray.h"
+#include "ray.hpp"
 #include <ext/scalar_constants.hpp>
 #include <gtc/constants.hpp>
 

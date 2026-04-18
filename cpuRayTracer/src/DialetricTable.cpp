@@ -1,4 +1,4 @@
-#include "DialetricTable.h"
+#include "dialectricTable.hpp"
 
 namespace CRT
 {

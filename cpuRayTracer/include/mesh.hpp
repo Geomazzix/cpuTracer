@@ -1,5 +1,5 @@
 #pragma once
-#include "SpacialSubdivision/BVH.h"
+#include "spacialSubdivision/bvh.hpp"
 
 namespace CRT
 {	

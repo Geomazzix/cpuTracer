@@ -1,6 +1,6 @@
-#include "Primitives/Plane.h"
+#include "primitives/plane.hpp"
 #include <geometric.hpp>
-#include "Ray.h"
+#include "ray.hpp"
 
 namespace CRT
 {

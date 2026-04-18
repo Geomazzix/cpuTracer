@@ -1,6 +1,6 @@
 #pragma once
 #include <array>
-#include "Primitives/Primitive.h"
+#include "primitives/primitive.hpp"
 
 namespace CRT
 {

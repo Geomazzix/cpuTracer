@@ -1,7 +1,7 @@
-#include "ResourceManager.h"
-#include "Material.h"
-#include "Mesh.h"
-#include "Image.h"
+#include "resourceCache.hpp"
+#include "material.hpp"
+#include "mesh.hpp"
+#include "image.hpp"
 
 namespace CRT
 {

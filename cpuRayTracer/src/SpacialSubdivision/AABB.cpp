@@ -1,6 +1,6 @@
-#include "SpacialSubdivision/AABB.h"
-#include "Ray.h"
-#include "Utility/MathUtility.h"
+#include "spacialSubdivision/aabb.hpp"
+#include "ray.hpp"
+#include "utility/math.hpp"
 
 namespace CRT
 {

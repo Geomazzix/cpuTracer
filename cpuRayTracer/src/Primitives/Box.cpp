@@ -1,5 +1,5 @@
-#include "Primitives/Box.h"
-#include "Ray.h"
+#include "primitives/box.hpp"
+#include "ray.hpp"
 
 namespace CRT
 {

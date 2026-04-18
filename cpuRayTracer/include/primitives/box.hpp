@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 #include <vec3.hpp>
-#include "Primitive.h"
+#include "primitive.hpp"
 
 namespace CRT
 {

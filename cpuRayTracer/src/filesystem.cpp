@@ -1,4 +1,4 @@
-#include "IO.h"
+#include "filesystem.hpp"
 #include <vector>
 #include <gtc/type_ptr.hpp>
 #include <common.hpp>
@@ -13,12 +13,12 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 
-#include "Material.h"
-#include "Utility/MathUtility.h"
-#include "ResourceManager.h"
-#include "Image.h"
-#include "Mesh.h"
-#include "Primitives/Triangle.h"
+#include "material.hpp"
+#include "utility/math.hpp"
+#include "resourceCache.hpp"
+#include "image.hpp"
+#include "mesh.hpp"
+#include "primitives/triangle.hpp"
 
 namespace CRT
 {

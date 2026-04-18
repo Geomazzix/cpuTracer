@@ -1,18 +1,18 @@
 #include <memory>
 #include <glm.hpp>
-#include "IO.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
-#include "Scene.h"
-#include "mesh.h"
-#include "Material.h"
-#include "Camera.h"
-#include "Light.h"
-#include "Primitives/Plane.h"
-#include "Primitives/Sphere.h"
-#include "Primitives/Box.h"
-#include "DialetricTable.h"
-#include "JobSystem.h"
+#include "filesystem.hpp"
+#include "resourceCache.hpp"
+#include "renderer.hpp"
+#include "scene.hpp"
+#include "mesh.hpp"
+#include "material.hpp"
+#include "camera.hpp"
+#include "light.hpp"
+#include "primitives/plane.hpp"
+#include "primitives/sphere.hpp"
+#include "primitives/box.hpp"
+#include "dialectricTable.hpp"
+#include "jobsystem.hpp"
 
 using namespace CRT;
 

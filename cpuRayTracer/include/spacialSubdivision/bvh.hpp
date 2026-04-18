@@ -2,7 +2,7 @@
 #include <vec3.hpp>
 #include <memory>
 #include <vector>
-#include "Primitives/Primitive.h"
+#include "primitives/primitive.hpp"
 
 namespace CRT
 {

@@ -1,6 +1,6 @@
-#include "Primitives/Sphere.h"
+#include "primitives/sphere.hpp"
 #include <geometric.hpp>
-#include "Ray.h"
+#include "ray.hpp"
 
 namespace CRT
 {

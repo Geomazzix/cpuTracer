@@ -1,18 +1,18 @@
-#include "Renderer.h"
+#include "renderer.hpp"
 #include <random>
 
-#include "Ray.h"
-#include "Scene.h"
-#include "Primitives/Primitive.h"
-#include "Transform.h"
-#include "Camera.h"
-#include "DialetricTable.h"
-#include "Utility/ProgressReporter.h"
-#include "Light.h"
-#include "Image.h"
-#include "Material.h"
-#include "JobSystem.h"
-#include "SpacialSubdivision/BVH.h"
+#include "ray.hpp"
+#include "scene.hpp"
+#include "primitives/primitive.hpp"
+#include "transform.hpp"
+#include "camera.hpp"
+#include "dialectricTable.hpp"
+#include "utility/progressReporter.hpp"
+#include "light.hpp"
+#include "image.hpp"
+#include "material.hpp"
+#include "jobsystem.hpp"
+#include "spacialSubdivision/bvh.hpp"
 
 //#define NORMAL_COLORING
 

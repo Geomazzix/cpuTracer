@@ -1,7 +1,7 @@
 #pragma once
 #include <vec3.hpp>
 #include <memory>
-#include "Transform.h"
+#include "transform.hpp"
 
 namespace CRT
 {

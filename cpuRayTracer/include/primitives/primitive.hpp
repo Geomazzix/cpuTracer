@@ -1,8 +1,8 @@
 #pragma once
 #include <vec3.hpp>
 #include <memory>
-#include "SpacialSubdivision/AABB.h"
-#include "Transform.h"
+#include "spacialSubdivision/aabb.hpp"
+#include "transform.hpp"
 
 namespace CRT
 {

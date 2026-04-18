@@ -1,5 +1,5 @@
-#include "Mesh.h"
-#include "Ray.h"
+#include "mesh.hpp"
+#include "ray.hpp"
 
 namespace CRT
 {

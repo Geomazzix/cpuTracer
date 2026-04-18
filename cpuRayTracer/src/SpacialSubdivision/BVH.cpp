@@ -1,9 +1,9 @@
-#include "SpacialSubdivision/BVH.h"
+#include "spacialSubdivision/bvh.hpp"
 #include <gtx/transform.hpp>
 #include <algorithm>
 #include <geometric.hpp>
-#include "Memory.h"
-#include "Ray.h"
+#include "memory.hpp"
+#include "ray.hpp"
 
 namespace CRT
 {

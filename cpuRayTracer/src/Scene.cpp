@@ -1,10 +1,10 @@
-#include "Scene.h"
-#include "IO.h"
-#include "Ray.h"
-#include "SpacialSubdivision/BVH.h"
-#include "Image.h"
-#include "Primitives/Primitive.h"
-#include "Light.h"
+#include "scene.hpp"
+#include "filesystem.hpp"
+#include "ray.hpp"
+#include "spacialSubdivision/bvh.hpp"
+#include "image.hpp"
+#include "primitives/primitive.hpp"
+#include "light.hpp"
 
 namespace CRT
 {
