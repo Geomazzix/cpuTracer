@@ -5,7 +5,7 @@
 #include "memory.hpp"
 #include "ray.hpp"
 
-namespace CRT
+namespace crt
 {
 	BVH::BVH() : 
 		Primitive(),

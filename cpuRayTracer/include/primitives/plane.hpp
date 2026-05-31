@@ -1,7 +1,7 @@
 #pragma once
 #include "primitive.hpp"
 
-namespace CRT
+namespace crt
 {
 	struct Ray;
 	struct HitInfo;

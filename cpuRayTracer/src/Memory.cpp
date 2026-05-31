@@ -2,7 +2,7 @@
 #include <new>
 #include <cstddef>
 
-namespace CRT
+namespace crt
 {
     constexpr inline std::align_val_t GetL1CacheAlignment()
     {

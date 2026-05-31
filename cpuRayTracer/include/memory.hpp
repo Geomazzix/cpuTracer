@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CRT
+namespace crt
 {
     /**
      * @brief Allocates memory in alignment with the cache line size.

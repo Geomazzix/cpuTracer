@@ -1,7 +1,7 @@
 #pragma once
 #include <vec3.hpp>
 
-namespace CRT
+namespace crt
 {
 	class Primitive;
 

@@ -6,7 +6,7 @@
 #include "primitives/primitive.hpp"
 #include "light.hpp"
 
-namespace CRT
+namespace crt
 {
 	Scene::Scene() :
 		m_skySphere(nullptr)
@@ -70,7 +70,7 @@ namespace CRT
 		return *m_ambientLight;
 	}
 
-	void Scene::GenerateBVH()
+	void Scene::GenerateTlas()
 	{
 		m_tlas = std::make_unique<BVH>();
 		

@@ -38,10 +38,11 @@
 #include <atomic>
 #include <chrono>
 #include <thread>
-#include "jobsystem.hpp"
 
-namespace CRT 
+namespace crt 
 {
+    class JobSystem;
+
     /**
      * @brief The progress reporter, prints a progressionbar in the console, while running on a seperate thread.
      * This implementation is basically a ported and tweaked version of the progression bar of pbrt. It therefor falls under the license of.
@@ -49,21 +50,28 @@ namespace CRT
     class ProgressReporter 
     {
     public:
-        ProgressReporter(std::shared_ptr<JobSystem> jobSystem, int64_t m_totalWorkDone, const std::string& m_title);
+        ProgressReporter(JobSystem& jobSystem, int64_t m_totalWorkDone, std::string_view m_title);
         ~ProgressReporter();
 
+        ProgressReporter(const ProgressReporter&) = delete;
+        ProgressReporter& operator=(const ProgressReporter&) = delete;
+        ProgressReporter(ProgressReporter&&) = delete;
+        ProgressReporter& operator=(ProgressReporter&&) = delete;
+
         void Update(int64_t num = 1);
-        float ElapsedMS() const;
         void Done();
 
-    private:
-        void PrintBar();
+        [[nodiscard]] float ElapsedMs() const;
 
+    private:
+        void PrintBar(std::stop_token stopToken);
+        [[nodiscard]] static int TerminalWidth();
+
+        JobSystem& m_jobSystem;
         const int64_t m_totalWorkDone;
         const std::string m_title;
         const std::chrono::system_clock::time_point m_startTime;
         std::atomic<int64_t> m_workDone;
-        std::atomic<bool> m_exitThread;
-        std::shared_ptr<JobSystem> m_jobSystem;
+        std::stop_source m_stopSource;
     };
 }

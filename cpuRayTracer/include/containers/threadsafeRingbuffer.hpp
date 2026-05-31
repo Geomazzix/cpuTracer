@@ -1,77 +1,88 @@
 #pragma once
 #include <cstdint>
 #include <mutex>
+#include <array>
 
-namespace CRT
+namespace crt
 {
 	/**
-	 * @brief Minimal thread safe ring buffer.
+	 * @brief Thread-safe ring buffer.
 	 * @tparam T The type of data to store in the buffer.
 	 * @tparam Capacity The amount of items allowed in the ring buffer.
 	 */
 	template<typename T, size_t Capacity>
-	class ThreadSafeRingBuffer
+	class ThreadSafeRingBuffer final
 	{
 	public:
 		ThreadSafeRingBuffer();
 		~ThreadSafeRingBuffer() = default;
 
-		bool PushBack(const T& item);
+		ThreadSafeRingBuffer(const ThreadSafeRingBuffer&) = delete;
+		ThreadSafeRingBuffer& operator=(const ThreadSafeRingBuffer&) = delete;
+		ThreadSafeRingBuffer(ThreadSafeRingBuffer&&) = delete;
+		ThreadSafeRingBuffer& operator=(ThreadSafeRingBuffer&&) = delete;
+
+		template<typename U> requires std::is_constructible_v<T, U&&>
+		bool PushBack(U&& item);
 		bool PopFront(T& item);
 
-		size_t GetCapacity() const;
+		[[nodiscard]] bool IsEmpty() const;
+		[[nodiscard]] size_t GetCapacity() const;
 
 	private:
+		std::array<T, Capacity> m_data;
+		mutable std::mutex m_ringBufferMutex;
 		size_t m_head;
 		size_t m_tail;
-		T m_data[Capacity];
-		std::mutex m_ringBufferMutex;
 	};
 
 
 	template<typename T, size_t Capacity>
 	ThreadSafeRingBuffer<T, Capacity>::ThreadSafeRingBuffer() :
-		m_head(0),
-		m_tail(0)
+		m_head{ 0 },
+		m_tail{ 0 }
 	{}
 
 	template<typename T, size_t Capacity>
-	bool ThreadSafeRingBuffer<T, Capacity>::PopFront(T& item)
-	{
-		bool result = false;
-		m_ringBufferMutex.lock();
+	template<typename U> requires std::is_constructible_v<T, U&&>
+	inline bool ThreadSafeRingBuffer<T, Capacity>::PushBack(U&& item)
+	{	
+		std::scoped_lock lock(m_ringBufferMutex);
 
-		if (m_tail != m_head)
+		const size_t next = (m_head + 1) % Capacity;
+		if (next == m_tail)
 		{
-			item = m_data[m_tail];
-			m_tail = (m_tail + 1) % Capacity;
-			result = true;
+			return false;
 		}
-
-		m_ringBufferMutex.unlock();
-		return result;
+		
+		m_data[m_head] = std::forward<U>(item);
+		m_head = next;
+		return true;
 	}
 
 	template<typename T, size_t Capacity>
-	bool ThreadSafeRingBuffer<T, Capacity>::PushBack(const T& item)
+	inline bool ThreadSafeRingBuffer<T, Capacity>::PopFront(T& item)
 	{
-		bool result = false;
-		m_ringBufferMutex.lock();
-
-		size_t next = (m_head + 1) % Capacity;
-		if (next != m_tail)
+		std::scoped_lock lock(m_ringBufferMutex);
+		if (m_tail == m_head) 
 		{
-			m_data[m_head] = item;
-			m_head = next;
-			result = true;
+			return false;
 		}
 
-		m_ringBufferMutex.unlock();
-		return result;
+		item = std::move(m_data[m_tail]);
+		m_tail = (m_tail + 1) % Capacity;
+		return true;
 	}
 
 	template<typename T, size_t Capacity>
-	size_t ThreadSafeRingBuffer<T, Capacity>::GetCapacity() const
+	inline bool ThreadSafeRingBuffer<T, Capacity>::IsEmpty() const
+	{
+		std::scoped_lock lock(m_ringBufferMutex);
+		return m_head == m_tail;
+	}
+
+	template<typename T, size_t Capacity>
+	inline size_t ThreadSafeRingBuffer<T, Capacity>::GetCapacity() const
 	{
 		return Capacity;
 	}

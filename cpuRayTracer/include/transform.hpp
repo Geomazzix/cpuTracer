@@ -3,7 +3,7 @@
 #include <mat4x4.hpp>
 #include <gtx/quaternion.hpp>
 
-namespace CRT
+namespace crt
 {
 	/**
 	 * @brief The transform is used to define child-parent relationships for scene hierarchy transfersal.

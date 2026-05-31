@@ -1,7 +1,7 @@
 #pragma once
 #include "spacialSubdivision/bvh.hpp"
 
-namespace CRT
+namespace crt
 {	
 	/**
 	 * @brief The mesh represent a number of intersectible triangles and uses a Bounding Volume Hierarchy to improve the intersection performance.

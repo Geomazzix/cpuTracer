@@ -3,7 +3,7 @@
 #include <vec3.hpp>
 #include "primitive.hpp"
 
-namespace CRT
+namespace crt
 {
 	/**
 	 * @brief The box primitive represents 2 corner points in space, which checks if a ray intersects in between.

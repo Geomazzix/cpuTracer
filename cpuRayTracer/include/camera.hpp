@@ -1,7 +1,7 @@
 #pragma once
 #include "transform.hpp"
 
-namespace CRT
+namespace crt
 {
 	/**
 	 * @brief The camera class is used to define the location and size proportions of the image being rendered by the renderer.
@@ -9,10 +9,8 @@ namespace CRT
 	class Camera final
 	{
 	public:
-		Camera();
+		Camera(int pixelWidth, int pixelHeight, float zNear = 0.1f, float zFar = 1000.0f);
 		~Camera() = default;
-
-		void Initialize(int pixelWidth, int pixelHeight, float zNear = 0.1f, float zFar = 1000.0f);
 		
 		void SetFieldOfView(float fovInDeg);
 		float GetFovInRads() const;

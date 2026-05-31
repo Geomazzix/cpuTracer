@@ -1,6 +1,6 @@
 #include "light.hpp"
 
-namespace CRT
+namespace crt
 {
 	Light::Light() :
 		m_intensity(1.0f),

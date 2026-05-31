@@ -1,8 +1,9 @@
 #pragma once
+#include <vec2.hpp>
 #include <vec3.hpp>
 #include <memory>
 
-namespace CRT
+namespace crt
 {
 	struct Ray;
 	struct HitInfo;
@@ -17,6 +18,7 @@ namespace CRT
 	 */
 	struct RendererConfig
 	{
+		glm::uvec2 Resolution = { 1920, 1080 };
 		int MaxRenderDepth = 4;
 		bool EnableShadows = true;
 	};
@@ -27,10 +29,9 @@ namespace CRT
 	class Renderer final
 	{
 	public:
-		Renderer();
+		Renderer(JobSystem& jobSystem, const RendererConfig& renderConfig);
 		~Renderer();
 
-		void Initialize(std::shared_ptr<JobSystem> jobSystem, int numPixels, const RendererConfig& renderConfig);
 		glm::vec3* Render(Camera& camera, Scene& scene);
 
 	private:
@@ -40,7 +41,7 @@ namespace CRT
 		float SchlickApproximation(float n1, float n2, const glm::vec3& normal, const glm::vec3& incident, float reflectivity);
 
 		RendererConfig m_config;
-		std::shared_ptr<JobSystem> m_jobSystem;
+		JobSystem& m_jobSystem;
 		std::weak_ptr<Image> m_skySphere;
 		glm::vec3* m_imagePixels;
 	};

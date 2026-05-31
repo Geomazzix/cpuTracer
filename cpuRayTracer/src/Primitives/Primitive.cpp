@@ -1,7 +1,7 @@
 #include "primitives/primitive.hpp"
 #include "ray.hpp"
 
-namespace CRT
+namespace crt
 {
 	Primitive::Primitive() :
 		m_transform(),

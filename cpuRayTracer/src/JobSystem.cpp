@@ -1,33 +1,39 @@
 #include "jobsystem.hpp"
 
-#pragma warning (push)
-#pragma warning (disable : 26451)
-
-namespace CRT
+namespace crt
 {
 	JobSystem::JobSystem() :
+		m_jobPool(std::make_unique<ThreadSafeRingBuffer<ThreadJob, 256>>()),
 		m_currentLabel(0)
-	{}
-
-	void JobSystem::Initialize()
 	{
 		m_finishedValue.store(0);
-		uint32_t numThreads = std::max(1u, std::thread::hardware_concurrency() - 1); //-1 for the progress reporter.
 
-		for (uint32_t i = 0; i < numThreads; ++i)
+		uint32_t numWorkers = std::thread::hardware_concurrency();
+		if (numWorkers == 0)
 		{
-			std::thread worker(&JobSystem::WorkerThread, this);
-			worker.detach();
+			return;
+		}
+		numWorkers -= 1; /* -1 for the progress reporter. */
+
+		m_workThreads.reserve(numWorkers);
+		for (uint32_t i = 0; i < numWorkers; ++i)
+		{
+			m_workThreads.emplace_back([this](std::stop_token st) { WorkerThread(st); });
 		}
 	}
 
-	void JobSystem::Execute(const ThreadJob& job)
+	JobSystem::~JobSystem()
+	{
+		for (auto& workerThread : m_workThreads)
+		{
+			workerThread.request_stop();
+		}
+	}
+
+	void JobSystem::Execute(ThreadJob job)
 	{
 		m_currentLabel++;
-
-		//Keep checking if a job can be added, if not keep notifying threads that there are unfinished jobs, 
-		//in order to prevent them from falling asleep.
-		while (!m_jobPool.PushBack(job))
+		while (!m_jobPool->PushBack(job))
 		{
 			Poll();
 		}
@@ -35,7 +41,7 @@ namespace CRT
 		m_wakeCondition.notify_one();
 	}
 
-	bool JobSystem::IsBusy()
+	[[nodiscard]] bool JobSystem::IsBusy() const
 	{
 		return m_finishedValue.load() < m_currentLabel;
 	}
@@ -51,27 +57,26 @@ namespace CRT
 	void JobSystem::Poll()
 	{
 		m_wakeCondition.notify_one();
-		std::this_thread::yield();		//Allow the the thread to be rescheduled.
+		std::this_thread::yield();
 	}
 
-	void JobSystem::WorkerThread()
+	void JobSystem::WorkerThread(std::stop_token stopToken)
 	{
 		ThreadJob job;
-
-		while (true)
+		while (!stopToken.stop_requested())
 		{
-			if (m_jobPool.PopFront(job))
+			if (m_jobPool->PopFront(job))
 			{
 				job();
 				m_finishedValue.fetch_add(1);
+				continue;
 			}
-			else
+
+			std::unique_lock<std::mutex> lock(m_lockMutex);
+			m_wakeCondition.wait(lock, stopToken, [&]
 			{
-				std::unique_lock<std::mutex> lock(m_lockMutex);
-				m_wakeCondition.wait(lock);
-			}
+				return !m_jobPool->IsEmpty();
+			});
 		}
 	}
 }
-
-#pragma warning (pop)

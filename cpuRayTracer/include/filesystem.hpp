@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-namespace CRT
+namespace crt
 {
 	struct Image;
 	class Mesh;

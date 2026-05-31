@@ -2,7 +2,7 @@
 #include "ray.hpp"
 #include "utility/math.hpp"
 
-namespace CRT
+namespace crt
 {
 	AABB::AABB(const glm::vec3& min /*= glm::vec3(-1.0f)*/, const glm::vec3& max /*= glm::vec3(1.0f)*/)
 	{

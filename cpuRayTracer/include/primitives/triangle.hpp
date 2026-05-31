@@ -2,7 +2,7 @@
 #include <array>
 #include "primitives/primitive.hpp"
 
-namespace CRT
+namespace crt
 {
 	struct Ray;
 	struct HitInfo;

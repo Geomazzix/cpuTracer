@@ -1,7 +1,7 @@
 #include "primitives/box.hpp"
 #include "ray.hpp"
 
-namespace CRT
+namespace crt
 {
 	Box::Box() : 
 		m_bounds { glm::vec3(-.5f), glm::vec3(.5f) }

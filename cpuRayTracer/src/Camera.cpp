@@ -1,8 +1,8 @@
 #include "camera.hpp"
 
-namespace CRT
+namespace crt
 {
-	Camera::Camera() :
+	Camera::Camera(int pixelWidth, int pixelHeight, float zNear, float zFar) :
 		m_fovInRad(glm::radians<float>(70.0f)),
 		m_viewPortPixelWidth(0),
 		m_viewPortPixelHeight(0),
@@ -11,9 +11,6 @@ namespace CRT
 		m_aspectRatio(1.2f),
 		m_cameraSize(10.0f),
 		m_aperture(0.0f)
-	{}
-
-	void Camera::Initialize(int pixelWidth, int pixelHeight, float zNear, float zFar)
 	{
 		m_viewPortPixelWidth = pixelWidth;
 		m_viewPortPixelHeight = pixelHeight;

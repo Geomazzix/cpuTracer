@@ -4,7 +4,7 @@
 #include <vector>
 #include "primitives/primitive.hpp"
 
-namespace CRT
+namespace crt
 {
 	class AABB;
 	struct Ray;

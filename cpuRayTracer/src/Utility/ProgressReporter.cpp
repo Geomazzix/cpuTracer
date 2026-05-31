@@ -28,140 +28,159 @@
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
  */
+
+/* Note that the original code has been modified as to adjust itself to modern cpp. */
+
 #include "utility/progressReporter.hpp"
+#include "jobsystem.hpp"
+#include <format>
+#include <iostream>
 
 #if defined(_WIN64) || defined(_WIN32)
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+	#define WIN32_LEAN_AND_MEAN
+	#include <windows.h>
+#else
+	#include <sys/ioctl.h>
+	#include <unistd.h>
+	#include <cerrno>
 #endif
 
-namespace CRT
+namespace crt
 {
-	static int TerminalWidth();
+	using namespace std::chrono_literals;
 
-	// ProgressReporter Method Definitions
-	ProgressReporter::ProgressReporter(std::shared_ptr<JobSystem> jobSystem, int64_t m_totalWorkDone, const std::string& m_title)
-		: m_jobSystem(jobSystem), m_totalWorkDone(std::max((int64_t)1, m_totalWorkDone)), m_title(m_title), m_startTime(std::chrono::system_clock::now()) 
+	ProgressReporter::ProgressReporter(JobSystem& jobSystem, int64_t m_totalWorkDone, std::string_view m_title) :
+		m_jobSystem(jobSystem), 
+		m_totalWorkDone{ std::max(static_cast<int64_t>(1), m_totalWorkDone) },
+		m_title(m_title), 
+		m_startTime(std::chrono::system_clock::now()) 
 	{
 		m_workDone = 0;
-		m_exitThread = false;
-		m_jobSystem->Execute([this]() {
-			PrintBar(); 
-		});	
+		m_jobSystem.Execute([this, st = m_stopSource.get_token()]()
+		{
+			PrintBar(st);
+		});
 	}
 
 	ProgressReporter::~ProgressReporter() 
 	{
-		m_workDone = m_totalWorkDone;
-		m_exitThread = true;
-		printf("\n");
+		m_workDone.store(m_totalWorkDone);
+		m_stopSource.request_stop();
+		std::cout << std::endl;
 	}
 
-	void ProgressReporter::Update(int64_t num /*= 1*/)
+	void ProgressReporter::Update(int64_t num)
 	{
-		if (num == 0) return;
-		m_workDone += num;
-	}
-
-	void ProgressReporter::PrintBar()
-	{
-		int barLength = TerminalWidth() - 28;
-		int totalPlusses = std::max(2, barLength - (int)m_title.size());
-		int plussesPrinted = 0;
-
-		// Initialize progress string
-		const int bufLen = static_cast<int>(m_title.size()) + totalPlusses + 64;
-		std::unique_ptr<char[]> buf(new char[bufLen]);
-		snprintf(buf.get(), bufLen, "\r%s: [", m_title.c_str());
-		char* curSpace = buf.get() + strlen(buf.get());
-		char* s = curSpace;
-		for (int i = 0; i < totalPlusses; ++i) *s++ = ' ';
-		*s++ = ']';
-		*s++ = ' ';
-		*s++ = '\0';
-		fputs(buf.get(), stdout);
-		fflush(stdout);
-
-		std::chrono::milliseconds sleepDuration(250);
-		int iterCount = 0;
-		while (!m_exitThread) 
+		if (num == 0)
 		{
-			std::this_thread::sleep_for(sleepDuration);
-
-			// Periodically increase sleepDuration to reduce overhead of
-			// updates.
-			++iterCount;
-			if (iterCount == 10)
-				// Up to 0.5s after ~2.5s elapsed
-				sleepDuration *= 2;
-			else if (iterCount == 70)
-				// Up to 1s after an additional ~30s have elapsed.
-				sleepDuration *= 2;
-			else if (iterCount == 520)
-				// After 15m, jump up to 5s intervals
-				sleepDuration *= 5;
-
-			float percentDone = static_cast<float>(m_workDone) / static_cast<float>(m_totalWorkDone);
-			int plussesNeeded = std::round(static_cast<double>(totalPlusses * percentDone));
-			while (plussesPrinted < plussesNeeded) {
-				*curSpace++ = '+';
-				++plussesPrinted;
-			}
-			fputs(buf.get(), stdout);
-
-			// Update elapsed time and estimated time to completion
-			float seconds = ElapsedMS() / 1000.f;
-			float estRemaining = seconds / percentDone - seconds;
-			if (percentDone == 1.f)
-			{
-				printf(" (%.1fs)       ", seconds);
-			}
-			else if (!std::isinf(estRemaining))
-			{
-				printf(" (%.1fs|%.1fs)  ", seconds, std::max(0.0f, estRemaining));
-			}
-			else
-			{
-				printf(" (%.1fs|?s)  ", seconds);
-			}
-			
-			fflush(stdout);
+			return;
 		}
-	}
-
-	float ProgressReporter::ElapsedMS() const
-	{
-		std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-		int64_t elapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_startTime).count();
-		return static_cast<float>(elapsedMS);
+		m_workDone.fetch_add(num);
 	}
 
 	void ProgressReporter::Done()
 	{
-		m_workDone = m_totalWorkDone;
-		m_exitThread = true;
+		m_workDone.store(m_totalWorkDone);
+		m_stopSource.request_stop();
 	}
 
-	static int TerminalWidth() {
+	void ProgressReporter::PrintBar(std::stop_token stopToken)
+	{
+		const int barLength = TerminalWidth() - 28;
+		const int totalPlusses = std::max(2, barLength - static_cast<int>(m_title.size()));
+		int plussesPrinted = 0;
+
+		auto RenderBar = [&totalPlusses, &plussesPrinted](const std::string_view title)
+		{
+			const int filled = std::min(totalPlusses, plussesPrinted);
+			return std::format("\r{}: [{}{}] ", title, std::string(filled, '+'), std::string(totalPlusses - filled, ' '));
+		};
+		std::cout << RenderBar(m_title) << std::flush;
+
+		auto sleepDuration = 250ms;
+		int iterCount = 0;
+
+		while (!stopToken.stop_requested())
+		{
+			std::this_thread::sleep_for(sleepDuration);
+
+			/* Periodically increase sleepDuration to reduce overhead of updates. */
+			switch (++iterCount) 
+			{
+			case 10:
+				// Up to 0.5s after ~2.5s elapsed
+				sleepDuration *= 2;
+				break;
+			case 70:
+				// Up to 1s after an additional ~30s have elapsed.
+				sleepDuration *= 2;
+				break;
+			case 520:
+				// After 15m, jump up to 5s intervals
+				sleepDuration *= 5;
+				break;
+			default:
+				break;
+			}
+
+			/* Update elapsed time and estimated time to completion */
+			const float percentDone = static_cast<float>(m_workDone.load()) / static_cast<float>(m_totalWorkDone);
+			plussesPrinted = static_cast<int>(std::round(totalPlusses * percentDone));
+			const float seconds = ElapsedMs() / 1000.f;
+			const float estRemaining = seconds / percentDone - seconds;
+
+			std::string suffix;
+			if (percentDone == 1.f)
+			{
+				suffix = std::format("({:.1f}s)       ", seconds);
+			}
+			else if (!std::isinf(estRemaining))
+			{
+				suffix = std::format("({:.1f}s|{:.1f}s)  ", seconds, std::max(0.f, estRemaining));
+			}
+			else
+			{
+				suffix = std::format("({:.1f}s|?s)  ", seconds);
+			}
+			
+			std::cout << RenderBar(m_title) << suffix << std::flush;
+		}
+	}
+
+	[[nodiscard]] float ProgressReporter::ElapsedMs() const
+	{
+		const auto now = std::chrono::system_clock::now();
+		const uint64_t elapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_startTime).count();
+		return static_cast<float>(elapsedMS);
+	}
+
+	[[nodiscard]] int ProgressReporter::TerminalWidth()
+	{
 #if defined(_WIN64) || defined(_WIN32)
-		HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-		if (h == INVALID_HANDLE_VALUE || !h) {
-			fprintf(stderr, "GetStdHandle() call failed");
+		const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+		if (h == INVALID_HANDLE_VALUE || h == nullptr) 
+		{
+			std::fputs("GetStdHandle() call failed\n", stderr);
 			return 80;
 		}
-		CONSOLE_SCREEN_BUFFER_INFO bufferInfo = { 0 };
-		GetConsoleScreenBufferInfo(h, &bufferInfo);
-		return bufferInfo.dwSize.X;
+		
+		CONSOLE_SCREEN_BUFFER_INFO info{};
+		if (::GetConsoleScreenBufferInfo(h, &info) == 0)
+		{
+			return 80;
+		}
+		return info.dwSize.X;
 #else
-		struct winsize w;
-		if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) < 0) {
-			// ENOTTY is fine and expected, e.g. if output is being piped to a file.
-			if (errno != ENOTTY) {
-				static bool warned = false;
-				if (!warned) {
-					warned = true;
-					fprintf(stderr, "Error in ioctl() in TerminalWidth(): %d\n",
-						errno);
+		winsize w{};
+		if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) < 0)
+		{
+			/* ENOTTY is fine and expected, e.g. if output is being piped to a file. */
+			if (errno != ENOTTY)
+			{
+				static std::atomic<bool> warned{ false };
+				if (!warned.exchange(true))
+				{
+					std::fprintf(stderr, "Error in ioctl() in TerminalWidth(): %d\n", errno);
 				}
 			}
 			return 80;

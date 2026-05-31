@@ -2,7 +2,7 @@
 #include "ray.hpp"
 #include "utility/math.hpp"
 
-namespace CRT
+namespace crt
 {
 	Triangle::Triangle(const std::array<Vertex, 3>& vertexAttributes) :
 		Primitive(),

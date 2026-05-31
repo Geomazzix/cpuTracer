@@ -1,11 +1,11 @@
 #include "mesh.hpp"
 #include "ray.hpp"
 
-namespace CRT
+namespace crt
 {
 	void Mesh::SetTriangles(std::vector<std::shared_ptr<Primitive>>&& triangles)
 	{
-		m_triangles = triangles;
+		m_triangles = std::move(triangles);
 
 		BVHConfig config;
 		config.BinningCount = 12;

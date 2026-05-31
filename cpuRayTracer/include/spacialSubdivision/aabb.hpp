@@ -2,7 +2,7 @@
 #include <array>
 #include <vec3.hpp>
 
-namespace CRT
+namespace crt
 {
 	struct Ray;
 	struct HitInfo;

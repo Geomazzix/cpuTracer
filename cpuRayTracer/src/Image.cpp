@@ -5,7 +5,7 @@
 #include <ext/scalar_constants.hpp>
 #include <gtc/constants.hpp>
 
-namespace CRT
+namespace crt
 {
 	Image::Image() :
 		Width(0),

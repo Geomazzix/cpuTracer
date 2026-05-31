@@ -7,7 +7,7 @@
 #include <functional>
 #include "containers/threadsafeRingbuffer.hpp"
 
-namespace CRT
+namespace crt
 {
 	using ThreadJob = std::function<void()>;
 	
@@ -18,22 +18,27 @@ namespace CRT
 	{
 	public:
 		JobSystem();
-		~JobSystem() = default;
+		~JobSystem();
 
-		void Initialize();
-		void Execute(const ThreadJob& job);
+		JobSystem(const JobSystem&) = delete;
+		JobSystem& operator=(const JobSystem&) = delete;
+		JobSystem(JobSystem&&) = delete;
+		JobSystem& operator=(JobSystem&&) = delete;
 
-		bool IsBusy();
+		void Execute(ThreadJob job);
+
+		[[nodiscard]] bool IsBusy() const;
 		void Wait();
 
 	private:
-		ThreadSafeRingBuffer<ThreadJob, 256> m_jobPool;
-		uint64_t m_currentLabel;
-		std::atomic_uint64_t m_finishedValue;
+		std::unique_ptr<ThreadSafeRingBuffer<ThreadJob, 256>> m_jobPool;
+		std::condition_variable_any m_wakeCondition;
 		std::mutex m_lockMutex;
-		std::condition_variable m_wakeCondition;
+		std::atomic<uint64_t> m_finishedValue;
+		std::atomic<uint64_t> m_currentLabel;
+		std::vector<std::jthread> m_workThreads;
 
 		void Poll();
-		void WorkerThread();
+		void WorkerThread(std::stop_token stopToken);
 	};
 }

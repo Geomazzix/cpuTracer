@@ -1,7 +1,7 @@
 #include "transform.hpp"
 #include <gtx/transform.hpp>
 
-namespace CRT
+namespace crt
 {
 	Transform::Transform() :
 		m_translation(glm::vec3(0.0f)),
@@ -14,7 +14,9 @@ namespace CRT
 	const glm::mat4& Transform::GetMatrix()
 	{
 		if (m_isDirty)
+		{
 			UpdateLocalTransform();
+		}
 		return m_localTransform;
 	}
 

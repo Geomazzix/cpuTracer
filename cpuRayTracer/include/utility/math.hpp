@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <vec3.hpp>
 
-namespace CRT
+namespace crt
 {
 	static glm::vec3 Min(const glm::vec3& a, const glm::vec3& b)
 	{

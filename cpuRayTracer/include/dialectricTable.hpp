@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 
-namespace CRT
+namespace crt
 {
 	/**
 	 * @brief Used to identify the different types of refractive media that the renderer currently supports.

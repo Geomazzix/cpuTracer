@@ -20,7 +20,7 @@
 #include "mesh.hpp"
 #include "primitives/triangle.hpp"
 
-namespace CRT
+namespace crt
 {
 	std::string IO::GetNameFromFilePath(const std::string& filePath)
 	{

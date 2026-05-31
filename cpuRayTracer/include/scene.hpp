@@ -3,7 +3,7 @@
 #include <memory>
 #include <filesystem>
 
-namespace CRT
+namespace crt
 {
 	struct AmbientLight;
 	struct Ray;
@@ -38,13 +38,9 @@ namespace CRT
 
 		AmbientLight& GetAmbientLight();
 
-		void GenerateBVH();
+		void GenerateTlas();
 		bool Intersect(const Ray& ray, HitInfo& hitInfo, float maxRayLength);
 		void ShutDown();
-
-#if defined(_DEBUG)
-		void SetBVHDebugLayer(int index);
-#endif
 
 	private:
 		std::vector<std::shared_ptr<Primitive>> m_primitives;

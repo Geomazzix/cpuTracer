@@ -2,7 +2,7 @@
 #include <geometric.hpp>
 #include "ray.hpp"
 
-namespace CRT
+namespace crt
 {
 	bool Plane::Intersect(const Ray& ray, HitInfo& hitInfo, const float maxRayLength)
 	{

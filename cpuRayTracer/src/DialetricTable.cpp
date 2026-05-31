@@ -1,6 +1,6 @@
 #include "dialectricTable.hpp"
 
-namespace CRT
+namespace crt
 {
 	std::unordered_map<DialetricType, float> DialetricIndexTable::m_dialectricIorLookUpTable =
 	{

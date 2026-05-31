@@ -3,7 +3,7 @@
 #include <memory>
 #include "transform.hpp"
 
-namespace CRT
+namespace crt
 {
 	/**
 	 * @brief The ambient light replaces indirect illumination for the time being.

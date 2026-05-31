@@ -1,7 +1,7 @@
 #pragma once
 #include <vec3.hpp>
 
-namespace CRT
+namespace crt
 {
 	/**
 	 * @brief A material contains the surface properties that help to calculate the BSDF at location of ray-primitive intersection.

@@ -2,7 +2,7 @@
 #include <vec3.hpp>
 #include "primitive.hpp"
 
-namespace CRT
+namespace crt
 {
 	struct Ray;
 

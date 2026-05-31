@@ -1,5 +1,4 @@
 #include "renderer.hpp"
-#include <random>
 
 #include "ray.hpp"
 #include "scene.hpp"
@@ -14,26 +13,18 @@
 #include "jobsystem.hpp"
 #include "spacialSubdivision/bvh.hpp"
 
-//#define NORMAL_COLORING
-
-namespace CRT
+namespace crt
 {
-	Renderer::Renderer() : 
-		m_imagePixels(nullptr),
-		m_jobSystem(),
-		m_skySphere()
+	Renderer::Renderer(JobSystem& jobSystem, const RendererConfig& renderConfig) :
+		m_config(renderConfig),
+		m_jobSystem(jobSystem),
+		m_skySphere(),
+		m_imagePixels(new glm::vec3[renderConfig.Resolution.x * renderConfig.Resolution.y])
 	{}
 
 	Renderer::~Renderer()
 	{
 		delete[] m_imagePixels;
-	}
-
-	void Renderer::Initialize(std::shared_ptr<JobSystem> jobSystem, int numPixels, const RendererConfig& renderConfig)
-	{
-		m_config = renderConfig;
-		m_jobSystem = jobSystem;
-		m_imagePixels = new glm::vec3[numPixels];
 	}
 
 	glm::vec3 Renderer::ComputeRayColor(const Ray& ray, Scene& scene, float maxRayLength, float& absorbDistance, int depth)
@@ -253,13 +244,13 @@ namespace CRT
 					}
 				};
 
-				m_jobSystem->Execute(job);
+				m_jobSystem.Execute(job);
 				reporter.Update(clusterSize.x * clusterSize.y);
 			}
 		}
 
 		reporter.Done();
-		m_jobSystem->Wait();
+		m_jobSystem.Wait();
 
 		return m_imagePixels;
 	}

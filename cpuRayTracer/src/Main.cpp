@@ -14,18 +14,14 @@
 #include "dialectricTable.hpp"
 #include "jobsystem.hpp"
 
-using namespace CRT;
+using namespace crt;
 
 const glm::uvec2 imageDimensions = { 3840, 2160 };
 
 int main(int argc, char** argv)
 {
-	std::shared_ptr<JobSystem> jobSystem = std::make_shared<JobSystem>();
-	jobSystem->Initialize();
-
-	/* 1. Resource loading and scene setup. */
+	JobSystem jobSystem;
 	ResourceManager resourceManager;
-	resourceManager.Initialize();
 
 	std::shared_ptr<Material> groundMaterial = std::make_shared<Material>();
 	groundMaterial->AlbedoCoefficient = glm::vec3(0.7f);
@@ -54,25 +50,25 @@ int main(int argc, char** argv)
 	mainLight->SetIntensity(0.8f);
 	scene.AddLight(mainLight);
 
-	scene.GenerateBVH();
+	scene.GenerateTlas();
 
-	/* 2. Render setup and rendering he image. */
-	Camera camera;
-	camera.Initialize(imageDimensions.x, imageDimensions.y);
-	camera.GetTransform().Translate(glm::vec3(175.f, 175.f, 175.f));
-	camera.GetTransform().LookAt(glm::vec3(0.0f, 25.0f, 0.0f));
+	Camera camera(imageDimensions.x, imageDimensions.y);
 	camera.SetFieldOfView(50.0f);
 	camera.SetAperture(1.5f);
 	camera.SetFocalLength(100.0f);
 
+	Transform& camTransform = camera.GetTransform();
+	camTransform.Translate(glm::vec3{ 175.f, 175.f, 175.f });
+	camTransform.LookAt(glm::vec3{ 0.0f, 25.0f, 0.0f });
+
 	const RendererConfig config =
 	{
+		.Resolution = glm::uvec2 { imageDimensions.x * imageDimensions.y },
 		.MaxRenderDepth = 10,
 		.EnableShadows = true
 	};
 
-	Renderer renderer;
-	renderer.Initialize(jobSystem, imageDimensions.x * imageDimensions.y, config);
+	Renderer renderer = Renderer(jobSystem, config);
 
 	glm::vec3* colorData = renderer.Render(camera, scene);
 	printf("Done processing the image, now image output starting!\n");

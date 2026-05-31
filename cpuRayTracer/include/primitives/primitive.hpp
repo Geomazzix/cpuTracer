@@ -4,7 +4,7 @@
 #include "spacialSubdivision/aabb.hpp"
 #include "transform.hpp"
 
-namespace CRT
+namespace crt
 {
 	struct Material;
 	struct Ray;
